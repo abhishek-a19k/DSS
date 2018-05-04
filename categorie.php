@@ -11,6 +11,12 @@
    $req_field = array('categorie-name');
    validate_fields($req_field);
    $cat_name = remove_junk($db->escape($_POST['categorie-name']));
+
+     if(find_by_categorieName($_POST['categorie-name']) === false ){
+         $session->msg('d','<b>Sorry!</b> Entered category already exists! Please, enter unique category name.');
+         redirect('categorie.php', false);
+     }
+
    if(empty($errors)){
       $sql  = "INSERT INTO categories (name)";
       $sql .= " VALUES ('{$cat_name}')";

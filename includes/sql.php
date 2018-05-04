@@ -139,7 +139,7 @@ function tableExists($table){
   function find_all_user(){
       global $db;
       $results = array();
-      $sql = "SELECT u.id,u.name,u.username,u.user_level,u.status,u.last_login,";
+      $sql = "SELECT u.id,u.name,u.username,u.user_level,u.last_login,";
       $sql .="g.group_name ";
       $sql .="FROM users u ";
       $sql .="LEFT JOIN user_groups g ";
@@ -181,7 +181,7 @@ function tableExists($table){
     return($db->num_rows($result) === 0 ? true : false);
   }
   /*--------------------------------------------------------------*/
-  /* Function for cheaking which user level has access to page
+  /* Function for checking which user level has access to page
   /*--------------------------------------------------------------*/
    function page_require_level($require_level){
      global $session;
@@ -208,17 +208,17 @@ function tableExists($table){
    /* Function for Finding all product name
    /* JOIN with categorie  and media database table
    /*--------------------------------------------------------------*/
-  function join_product_table(){
-     global $db;
-     $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
-    $sql  .=" AS categorie,m.file_name AS image";
+function join_product_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.name, p.quantity ,p.date, c.name";
+    $sql  .=" AS categorie";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
-    $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);
 
-   }
+}
   /*--------------------------------------------------------------*/
   /* Function for Finding all product name
   /* Request coming from ajax.php for auto suggest
@@ -261,10 +261,10 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
-   $sql  .= "m.file_name AS image FROM products p";
+   $sql   = " SELECT p.id,p.name,c.name AS categorie,";
+  // $sql  .= "m.file_name AS image FROM products p";
    $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-   $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
+   //$sql  .= " LEFT JOIN media m ON m.id = p.media_id";
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
    return find_by_sql($sql);
  }
@@ -281,14 +281,14 @@ function tableExists($table){
    return $db->query($sql);
  }
  /*--------------------------------------------------------------*/
- /* Function for find all sales
- /*--------------------------------------------------------------*/
- function find_all_sale(){
+ /* Function for find all sales*/
+ function  find_all_sale(){
    global $db;
-   $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
-   $sql .= " FROM sales s";
+   $sql  = "SELECT s.id,s.username,s.qty,s.date,p.name";
+   $sql .= " FROM sales s ";
    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-   $sql .= " ORDER BY s.date DESC";
+   //$sql .= " WHERE s.username = '".$db->escape((string)$username) . "'";
+   $sql .= " ORDER BY s.date DESC ";
    return find_by_sql($sql);
  }
  /*--------------------------------------------------------------*/
@@ -305,22 +305,7 @@ function find_recent_sale_added($limit){
 /*--------------------------------------------------------------*/
 /* Function for Generate sales report by two dates
 /*--------------------------------------------------------------*/
-function find_sale_by_dates($start_date,$end_date){
-  global $db;
-  $start_date  = date("Y-m-d", strtotime($start_date));
-  $end_date    = date("Y-m-d", strtotime($end_date));
-  $sql  = "SELECT s.date, p.name,p.sale_price,p.buy_price,";
-  $sql .= "COUNT(s.product_id) AS total_records,";
-  $sql .= "SUM(s.qty) AS total_sales,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price,";
-  $sql .= "SUM(p.buy_price * s.qty) AS total_buying_price ";
-  $sql .= "FROM sales s ";
-  $sql .= "LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " WHERE s.date BETWEEN '{$start_date}' AND '{$end_date}'";
-  $sql .= " GROUP BY DATE(s.date),p.name";
-  $sql .= " ORDER BY DATE(s.date) DESC";
-  return $db->query($sql);
-}
+
 /*--------------------------------------------------------------*/
 /* Function for Generate Daily sales report
 /*--------------------------------------------------------------*/
@@ -335,20 +320,37 @@ function  dailySales($year,$month){
   $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.product_id";
   return find_by_sql($sql);
 }
+
+
 /*--------------------------------------------------------------*/
-/* Function for Generate Monthly sales report
+/* Find all categories name
 /*--------------------------------------------------------------*/
-function  monthlySales($year){
-  global $db;
-  $sql  = "SELECT s.qty,";
-  $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " WHERE DATE_FORMAT(s.date, '%Y' ) = '{$year}'";
-  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%c' ),s.product_id";
-  $sql .= " ORDER BY date_format(s.date, '%c' ) ASC";
-  return find_by_sql($sql);
+function find_by_categorieName($val)
+{
+    global $db;
+    $sql = "SELECT name FROM categories WHERE name = '{$db->escape($val)}' LIMIT 1 ";
+    $result = $db->query($sql);
+    return($db->num_rows($result) === 0 ? true : false);
+}
+/*--------------------------------------------------------------*/
+/* Find all  product name
+/*--------------------------------------------------------------*/
+function find_by_productName($val)
+{
+    global $db;
+    $sql = "SELECT name FROM products WHERE name = '{$db->escape($val)}' LIMIT 1 ";
+    $result = $db->query($sql);
+    return($db->num_rows($result) === 0 ? true : false);
 }
 
+function find_personal_history($username){
+    global $db;
+    $sql  = "SELECT s.id,s.username,s.qty,s.date,p.name";
+    $sql .= " FROM sales s ";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE s.username = '".$db->escape((string)$username) . "'";
+    $sql .= " ORDER BY s.date DESC ";
+    return find_by_sql($sql);
+}
 ?>
+

@@ -11,10 +11,10 @@
    validate_fields($req_fields);
 
    if(find_by_groupName($_POST['group-name']) === false ){
-     $session->msg('d','<b>Sorry!</b> Entered Group Name already in database!');
+     $session->msg('d','<b>Sorry!</b> Entered Group Name already exists!');
      redirect('add_group.php', false);
    }elseif(find_by_groupLevel($_POST['group-level']) === false) {
-     $session->msg('d','<b>Sorry!</b> Entered Group Level already in database!');
+     $session->msg('d','<b>Sorry!</b> Entered Group Level already exists!');
      redirect('add_group.php', false);
    }
    if(empty($errors)){

@@ -11,8 +11,8 @@
  <div class="col-md-12">
     <div class="panel">
       <div class="jumbotron text-center">
-         <h1>This is your new home page!</h1>
-         <p>Just browse around and find out what page you can access.</p>
+         <h1>Welcome to Deerwalk Sifal Inventory System!</h1>
+         <p>Browse around and find out what you can access.</p>
       </div>
     </div>
  </div>

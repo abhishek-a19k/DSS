@@ -1,12 +1,16 @@
+
+
 <?php
-  $page_title = 'All sale';
+  $page_title = 'All usage';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(3);
+   $user = current_user();
 ?>
-<?php
-$sales = find_all_sale();
-?>
+
+<?php $sales= find_personal_history($user['name']);?>
+
+
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-6">
@@ -43,16 +47,15 @@ $sales = find_all_sale();
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['name']); ?></td>
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
-               <!--<td class="text-center"><?php echo remove_junk($sale['price']); ?></td>-->
                <td class="text-center"><?php echo $sale['date']; ?></td>
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
-                     <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                    <!-- <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
-                     </a>
+                     </a>-->
                   </div>
                </td>
              </tr>

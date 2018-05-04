@@ -1,4 +1,4 @@
-<?php
+<!--<?php
   $page_title = 'All Image';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
@@ -83,4 +83,4 @@
 </div>
 
 
-<?php include_once('layouts/footer.php'); ?>
+<?php include_once('layouts/footer.php'); ?>-->

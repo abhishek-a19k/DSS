@@ -3,6 +3,7 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(2);
+
   $all_categories = find_all('categories');
   $all_photo = find_all('media');
 ?>
@@ -10,12 +11,20 @@
  if(isset($_POST['add_product'])){
    $req_fields = array('product-title','product-categorie','product-quantity');
    validate_fields($req_fields);
+
+   //authentication
+
+     if(find_by_productName($_POST['product-title']) === false ){
+         $session->msg('d','<b>Sorry!</b> Entered Product already exists!');
+         redirect('add_product.php', false);
+     }
+
+
+
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
      $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-
-
      $date    = make_date();
      $query  = "INSERT INTO products (";
      $query .=" name,quantity,categorie_id,date";
@@ -39,6 +48,13 @@
  }
 
 ?>
+
+
+
+
+
+
+
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-12">

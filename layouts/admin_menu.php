@@ -32,4 +32,12 @@
    </ul>
   </li>
 
+    <li>
+        <a href=" sales.php" class="submenu-toggle">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span>History</span>
+        </a>
+
+    </li>
+
 </ul>

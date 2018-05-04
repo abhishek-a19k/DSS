@@ -16,10 +16,10 @@
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-      <div class="logo pull-left"> Deerwalk Sifal     - Inventory </div>
+      <div class="logo pull-left"> Deerwalk Sifal-Inventory </div>
       <div class="header-content">
       <div class="header-date pull-left">
-        <strong><?php echo date("F j, Y, h:i:sa");?></strong>
+        <strong><?php echo date("F j, Y");?></strong>
           <strong><?php echo date("l");?></strong>
       </div>
       <div class="pull-right clearfix">

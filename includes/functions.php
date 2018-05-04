@@ -105,7 +105,7 @@ function count_id(){
   return $count++;
 }
 /*--------------------------------------------------------------*/
-/* Function for Creting random string
+/* Function for Creating random string
 /*--------------------------------------------------------------*/
 function randString($length = 5)
 {

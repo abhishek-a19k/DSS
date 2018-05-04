@@ -68,9 +68,9 @@
    <div class="col-md-12">
       <div class="panel">
         <div class="jumbotron text-center">
-           <h1>Welcome to Deerwalk Siffal Inventory System</h1>
+           <h1>Welcome to Deerwalk Siphal Inventory System</h1>
            <p> <strong>DWS</strong>  <strong> v1 </strong>.
-           </br>If you have a question regarding the usage of this applications, please ask on OSWA Fan page.</p>
+           </br> </p>
 
         </div>
       </div>

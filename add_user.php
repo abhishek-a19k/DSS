@@ -10,7 +10,10 @@
 
    $req_fields = array('full-name','username','password','level' );
    validate_fields($req_fields);
-
+      if(find_by_groupName($_POST['username']) === false ){
+          $session->msg('d','<b>Sorry!</b> Entered username already exists! Please, enter unique username.');
+          redirect('add_user.php', false);
+      }
    if(empty($errors)){
            $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
@@ -18,13 +21,13 @@
        $user_level = (int)$db->escape($_POST['level']);
        $password = sha1($password);
         $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level,status";
+        $query .="name,username,password,user_level";
         $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
+        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}'";
         $query .=")";
         if($db->query($query)){
           //sucess
-          $session->msg('s',"User account has been creted! ");
+          $session->msg('s',"User account has been created! ");
           redirect('add_user.php', false);
         } else {
           //failed
@@ -44,7 +47,7 @@
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Add New User</span>
+          <span>Add User</span>
        </strong>
       </div>
       <div class="panel-body">

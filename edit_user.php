@@ -23,8 +23,8 @@
            $name = remove_junk($db->escape($_POST['name']));
        $username = remove_junk($db->escape($_POST['username']));
           $level = (int)$db->escape($_POST['level']);
-       $status   = remove_junk($db->escape($_POST['status']));
-            $sql = "UPDATE users SET name ='{$name}', username ='{$username}',user_level='{$level}',status='{$status}' WHERE id='{$db->escape($id)}'";
+       //$status   = remove_junk($db->escape($_POST['status']));
+            $sql = "UPDATE users SET name ='{$name}', username ='{$username}',user_level='{$level}'/*,status='{$status}'*/ WHERE id='{$db->escape($id)}'";
          $result = $db->query($sql);
           if($result && $db->affected_rows() === 1){
             $session->msg('s',"Acount Updated ");

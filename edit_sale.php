@@ -15,22 +15,22 @@ if(!$sale){
 <?php
 
   if(isset($_POST['update_sale'])){
-    $req_fields = array('title','quantity','price','total', 'date' );
+    $req_fields = array('title','quantity', 'date' );
     validate_fields($req_fields);
         if(empty($errors)){
           $p_id      = $db->escape((int)$product['id']);
           $s_qty     = $db->escape((int)$_POST['quantity']);
-          $s_total   = $db->escape($_POST['total']);
+          //$s_total   = $db->escape($_POST['total']);
           $date      = $db->escape($_POST['date']);
           $s_date    = date("Y-m-d", strtotime($date));
 
           $sql  = "UPDATE sales SET";
-          $sql .= " product_id= '{$p_id}',qty={$s_qty},price='{$s_total}',date='{$s_date}'";
+          $sql .= " product_id= '{$p_id}',qty={$s_qty},date='{$s_date}'";
           $sql .= " WHERE id ='{$sale['id']}'";
           $result = $db->query($sql);
           if( $result && $db->affected_rows() === 1){
                     update_product_qty($s_qty,$p_id);
-                    $session->msg('s',"Sale updated.");
+                    $session->msg('s',"Updated.");
                     redirect('edit_sale.php?id='.$sale['id'], false);
                   } else {
                     $session->msg('d',' Sorry failed to updated!');
@@ -56,10 +56,10 @@ if(!$sale){
     <div class="panel-heading clearfix">
       <strong>
         <span class="glyphicon glyphicon-th"></span>
-        <span>All Sales</span>
+        <span>All History</span>
      </strong>
      <div class="pull-right">
-       <a href="sales.php" class="btn btn-primary">Show all sales</a>
+       <a href="sales.php" class="btn btn-primary">Show all History</a>
      </div>
     </div>
     <div class="panel-body">
@@ -67,8 +67,8 @@ if(!$sale){
          <thead>
           <th> Product title </th>
           <th> Qty </th>
-          <th> Price </th>
-          <th> Total </th>
+
+
           <th> Date</th>
           <th> Action</th>
          </thead>
@@ -82,17 +82,13 @@ if(!$sale){
                 <td id="s_qty">
                   <input type="text" class="form-control" name="quantity" value="<?php echo (int)$sale['qty']; ?>">
                 </td>
-                <td id="s_price">
-                  <input type="text" class="form-control" name="price" value="<?php echo remove_junk($product['sale_price']); ?>" >
-                </td>
-                <td>
-                  <input type="text" class="form-control" name="total" value="<?php echo remove_junk($sale['price']); ?>">
-                </td>
+
+
                 <td id="s_date">
                   <input type="date" class="form-control datepicker" name="date" data-date-format="" value="<?php echo remove_junk($sale['date']); ?>">
                 </td>
                 <td>
-                  <button type="submit" name="update_sale" class="btn btn-primary">Update sale</button>
+                  <button type="submit" name="update_sale" class="btn btn-primary">Update use</button>
                 </td>
               </form>
               </tr>

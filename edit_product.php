@@ -15,7 +15,7 @@ if(!$product){
 ?>
 <?php
  if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
+    $req_fields = array('product-title','product-categorie','product-quantity' );
     validate_fields($req_fields);
 
    if(empty($errors)){

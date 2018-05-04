@@ -38,26 +38,27 @@
 
           $html .= "<td id=\"s_name\">".$result['name']."</td>";
           $html .= "<input type=\"hidden\" name=\"s_id\" value=\"{$result['id']}\">";
-          $html  .= "<td>";
-          $html  .= "<input type=\"text\" class=\"form-control\" name=\"price\" value=\"{$result['sale_price']}\">";
-          $html  .= "</td>";
+         //$html  .= "<td>";
+
+        //  $html  .= "</td>";
+
           $html .= "<td id=\"s_qty\">";
           $html .= "<input type=\"text\" class=\"form-control\" name=\"quantity\" value=\"1\">";
           $html  .= "</td>";
-          $html  .= "<td>";
-          $html  .= "<input type=\"text\" class=\"form-control\" name=\"total\" value=\"{$result['sale_price']}\">";
-          $html  .= "</td>";
+         // $html  .= "<td>";
+         // $html  .= "<input type=\"text\" class=\"form-control\" name=\"total\" value=\"{$result['sale_price']}\">";
+          //$html  .= "</td>";
           $html  .= "<td>";
           $html  .= "<input type=\"date\" class=\"form-control datePicker\" name=\"date\" data-date data-date-format=\"yyyy-mm-dd\">";
           $html  .= "</td>";
           $html  .= "<td>";
-          $html  .= "<button type=\"submit\" name=\"add_sale\" class=\"btn btn-primary\">Add sale</button>";
+          $html  .= "<button type=\"submit\" name=\"use_product\" class=\"btn btn-primary\">Use Item</button>";
           $html  .= "</td>";
           $html  .= "</tr>";
 
         }
     } else {
-        $html ='<tr><td>product name not resgister in database</td></tr>';
+        $html ='<tr><td>product name not registered in database</td></tr>';
     }
 
     echo json_encode($html);
