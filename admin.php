@@ -7,9 +7,11 @@
 <?php
  $c_categorie     = count_by_id('categories');
  $c_product       = count_by_id('products');
-
  $c_user          = count_by_id('users');
- $products_sold   = find_higest_saleing_product('10');
+ $products_sold   = find_higest_saleing_product('5');
+
+$recent_products = find_recent_product_added('5');
+$recent_sales    = find_recent_sale_added('5')
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -52,18 +54,22 @@
         </div>
        </div>
     </div>
-  <!-- <div class="col-md-3">
-       <div class="panel panel-box clearfix">
-         <div class="panel-icon pull-left bg-yellow">
-          <i class="glyphicon glyphicon-usd"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_sale['total']; ?></h2>
-          <p class="text-muted">Sales</p>
-        </div>
-       </div> 
-    </div> -->
-</div>
+
+      <!-- <div class="col-md-3">
+            <div class="panel panel-box clearfix">
+              <div class="panel-icon pull-left bg-yellow">
+               <i class="glyphicon glyphicon-usd"></i>
+             </div>
+             <div class="panel-value pull-right">
+               <h2 class="margin-top"> <span class="glyphicon glyphicon-bell" style="font-size:18px;"></h2>
+               <p class="text-muted">Sales</p>
+             </div>
+            </div>
+         </div>
+     </div>-->
+
+
+
   <div class="row">
    <div class="col-md-12">
       <div class="panel">
@@ -107,7 +113,83 @@
        </div>
      </div>
    </div>
-  
+
+
+      <div class="col-md-4">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <strong>
+                      <span class="glyphicon glyphicon-th"></span>
+                      <span>LATEST USED</span>
+                  </strong>
+              </div>
+              <div class="panel-body">
+                  <table class="table table-striped table-bordered table-condensed">
+                      <thead>
+                      <tr>
+                          <th class="text-center" style="width: 50px;">#</th>
+                          <th>Product Name</th>
+                          <th>Date</th>
+                          <th>Total Used</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php foreach ($recent_sales as  $recent_sale): ?>
+                          <tr>
+                              <td class="text-center"><?php echo count_id();?></td>
+                              <td>
+                                  <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">
+                                      <?php echo remove_junk(first_character($recent_sale['name'])); ?>
+                                  </a>
+                              </td>
+                              <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+                              <td><?php echo remove_junk(first_character($recent_sale['qty'])); ?></td>
+
+                          </tr>
+
+                      <?php endforeach; ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="col-md-4">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <strong>
+                      <span class="glyphicon glyphicon-th"></span>
+                      <span>Recently Added Products</span>
+                  </strong>
+              </div>
+              <div class="panel-body">
+
+                  <div class="list-group">
+                      <?php foreach ($recent_products as  $recent_product): ?>
+                          <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
+                              <h4 class="list-group-item-heading">
+
+                                  <?php echo remove_junk(first_character($recent_product['name']));?>
+                                  <span class="label label-warning pull-right">
+
+                                         </span>
+                              </h4>
+                              <span class="list-group-item-text pull-right">
+                <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
+              </span>
+                          </a>
+                      <?php endforeach; ?>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+
  </div>
   <div class="row">
 

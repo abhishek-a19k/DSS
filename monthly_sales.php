@@ -1,14 +1,19 @@
 <?php
-  $page_title = 'Daily Sales';
+/**
+ * Created by PhpStorm.
+ * User: a-19-k
+ * Date: 8/9/18
+ * Time: 4:10 PM
+ */
+
+  $page_title = 'Monthly Sales';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(3);
 ?>
-
 <?php
- $year  = date('Y');
- $month = date('m');
- $sales = dailySales($year,$month);
+ $year = date('Y');
+ $sales = monthlySales($year);
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -22,7 +27,7 @@
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Daily Sales</span>
+            <span>Monthly Sales</span>
           </strong>
         </div>
         <div class="panel-body">
@@ -32,6 +37,7 @@
                 <th class="text-center" style="width: 50px;">#</th>
                 <th> Product name </th>
                 <th class="text-center" style="width: 15%;"> Quantity sold</th>
+               <!-- <th class="text-center" style="width: 15%;"> Total </th>-->
                 <th class="text-center" style="width: 15%;"> Date </th>
              </tr>
             </thead>
@@ -41,6 +47,7 @@
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['name']); ?></td>
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
+              <!-- //<td class="text-center"><?php /*echo remove_junk($sale['total_saleing_price']); */?></td>-->
                <td class="text-center"><?php echo $sale['date']; ?></td>
              </tr>
              <?php endforeach;?>

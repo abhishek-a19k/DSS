@@ -6,9 +6,11 @@
 
 
 <?php include_once('layouts/header.php'); ?>
-<div class="login-page">
+<div class="login-page" style="background-color:powderblue;">
     <div class="text-center">
-       <h1>Welcome</h1>
+    <!--   //<h1>Welcome</h1>-->
+        <img src="libs/images/logo.png" alt="Deerwalk Siphal School" width="300" height="100">
+
        <p>Sign in to Siffal Inventory</p>
      </div>
      <?php echo display_msg($msg); ?>
@@ -21,6 +23,13 @@
             <label for="Password" class="control-label">Password</label>
             <input type="password" name= "password" class="form-control" placeholder="password">
         </div>
+
+          <div class="">
+              <a  href="forgotPassword.php" class="btn btn-info pull-left">Forgot password</a>
+
+          </div>
+
+
         <div class="form-group">
                 <button type="submit" class="btn btn-info  pull-right">Login</button>
         </div>

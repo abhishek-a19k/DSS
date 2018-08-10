@@ -7,16 +7,16 @@ body{
   height: 100%;
   width: 100%;
 }a{
-  color #777;
+  color:#777;
   text-decoration: none;
 }.padding-top{
   padding-top: 20px;
 }.login-page{
-  width: 350px;
+  width: 500px;
   margin: 7% auto;
   padding: 0 20px;
   background-color: #f9f9f9;
-  border: 1px solid #f2f2f2;
+  border: 2px solid #f2f2f2;
 }.login-page .text-center{
   margin-bottom: 10px;
 }.box{

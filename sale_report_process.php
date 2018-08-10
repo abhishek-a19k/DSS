@@ -87,10 +87,8 @@ $results = '';
           <tr>
               <th>Date</th>
               <th>Product Title</th>
-              <th>Buying Price</th>
-              <th>Selling Price</th>
               <th>Total Qty</th>
-              <th>TOTAL</th>
+             <!-- <th>TOTAL</th>-->
           </tr>
         </thead>
         <tbody>
@@ -100,10 +98,9 @@ $results = '';
               <td class="desc">
                 <h6><?php echo remove_junk(ucfirst($result['name']));?></h6>
               </td>
-              <td class="text-right"><?php echo remove_junk($result['buy_price']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['sale_price']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['total_saleing_price']);?></td>
+
+             <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
+-->
           </tr>
         <?php endforeach; ?>
         </tbody>
@@ -115,12 +112,7 @@ $results = '';
            <?php echo number_format(total_price($results)[0], 2);?>
           </td>
          </tr>
-         <tr class="text-right">
-           <td colspan="4"></td>
-           <td colspan="1">Profit</td>
-           <td> $<?php echo number_format(total_price($results)[1], 2);?></td>
-         </tr>
-        </tfoot>
+
       </table>
     </div>
   <?php

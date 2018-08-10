@@ -14,7 +14,7 @@ function find_all($table) {
 /*--------------------------------------------------------------*/
 /* Function for Perform queries
 /*--------------------------------------------------------------*/
-function find_by_sql($sql)
+function    find_by_sql($sql)
 {
   global $db;
   $result = $db->query($sql);
@@ -170,6 +170,16 @@ function tableExists($table){
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
   }
+/*--------------------------------------------------------------*/
+/* Find UserName
+/*--------------------------------------------------------------*/
+function find_by_userName($val)
+{
+    global $db;
+    $sql = "SELECT username FROM users WHERE username = '{$db->escape($val)}' LIMIT 1 ";
+    $result = $db->query($sql);
+    return($db->num_rows($result) === 0 ? true : false);
+}
   /*--------------------------------------------------------------*/
   /* Find group level
   /*--------------------------------------------------------------*/
@@ -206,7 +216,7 @@ function tableExists($table){
      }
    /*--------------------------------------------------------------*/
    /* Function for Finding all product name
-   /* JOIN with categorie  and media database table
+   /* JOIN with categorie database table
    /*--------------------------------------------------------------*/
 function join_product_table(){
     global $db;
@@ -244,14 +254,29 @@ function join_product_table(){
     return find_by_sql($sql);
   }
 
+
+/*--------------------------------------------------------------*/
+/* Function for Finding all product info by product id
+/* Request coming from ajax.php
+/*--------------------------------------------------------------*/
+function find_all_product_info_by_id($id){
+    global $db;
+    $sql  = "SELECT * FROM products ";
+    $sql .= " WHERE id ='{$id}'";
+    $sql .=" LIMIT 1";
+    return find_by_sql($sql);
+}
+
   /*--------------------------------------------------------------*/
   /* Function for Update product quantity
   /*--------------------------------------------------------------*/
   function update_product_qty($qty,$p_id){
+
+
     global $db;
     $qty = (int) $qty;
     $id  = (int)$p_id;
-    $sql = "UPDATE products SET quantity=quantity -'{$qty}' WHERE id = '{$id}'";
+    $sql = "UPDATE products SET quantity= quantity -'{$qty}' WHERE id = '{$id}'";
     $result = $db->query($sql);
     return($db->affected_rows() === 1 ? true : false);
 
@@ -261,8 +286,8 @@ function join_product_table(){
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,c.name AS categorie,";
-  // $sql  .= "m.file_name AS image FROM products p";
+   $sql   = " SELECT p.id,p.name,c.name AS categorie ";
+   $sql  .= "FROM products p";
    $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
    //$sql  .= " LEFT JOIN media m ON m.id = p.media_id";
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
@@ -284,7 +309,7 @@ function join_product_table(){
  /* Function for find all sales*/
  function  find_all_sale(){
    global $db;
-   $sql  = "SELECT s.id,s.username,s.qty,s.date,p.name";
+   $sql  = "SELECT s.id,s.username,s.used_by,s.qty,s.date,p.name";
    $sql .= " FROM sales s ";
    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
    //$sql .= " WHERE s.username = '".$db->escape((string)$username) . "'";
@@ -296,7 +321,7 @@ function join_product_table(){
  /*--------------------------------------------------------------*/
 function find_recent_sale_added($limit){
   global $db;
-  $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
+  $sql  = "SELECT s.id,s.qty,s.date,p.name";
   $sql .= " FROM sales s";
   $sql .= " LEFT JOIN products p ON s.product_id = p.id";
   $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
@@ -312,8 +337,7 @@ function find_recent_sale_added($limit){
 function  dailySales($year,$month){
   global $db;
   $sql  = "SELECT s.qty,";
-  $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
+  $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name";
   $sql .= " FROM sales s";
   $sql .= " LEFT JOIN products p ON s.product_id = p.id";
   $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}'";
@@ -350,6 +374,43 @@ function find_personal_history($username){
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " WHERE s.username = '".$db->escape((string)$username) . "'";
     $sql .= " ORDER BY s.date DESC ";
+    return find_by_sql($sql);
+}
+
+
+
+/*--------------------------------------------------------------*/
+/* Function for Generate sales report by two dates
+/*--------------------------------------------------------------*/
+function find_sale_by_dates($start_date,$end_date){
+    global $db;
+    $start_date  = date("Y-m-d", strtotime($start_date));
+    $end_date    = date("Y-m-d", strtotime($end_date));
+    $sql  = "SELECT s.date, p.name,";
+   $sql .= "COUNT(s.product_id) AS total_records ,";
+    $sql .= "SUM(s.qty) AS total_sales ";
+   // $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price,";
+   // $sql .= "SUM(p.buy_price * s.qty) AS total_buying_price ";
+    $sql .= "FROM sales s ";
+    $sql .= "LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE s.date BETWEEN '{$start_date}' AND '{$end_date}'";
+    $sql .= " GROUP BY DATE(s.date),p.name";
+    $sql .= " ORDER BY DATE(s.date) DESC";
+    return $db->query($sql);
+}
+
+/*--------------------------------------------------------------*/
+/* Function for Generate Monthly sales report
+/*--------------------------------------------------------------*/
+function  monthlySales($year){
+    global $db;
+    $sql  = "SELECT s.qty,";
+    $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name";
+    $sql .= " FROM sales s";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE DATE_FORMAT(s.date, '%Y' ) = '{$year}'";
+    $sql .= " GROUP BY DATE_FORMAT( s.date,  '%c' ),s.product_id";
+    $sql .= " ORDER BY date_format(s.date, '%c' ) ASC";
     return find_by_sql($sql);
 }
 ?>

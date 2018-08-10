@@ -10,12 +10,12 @@
 
    $req_fields = array('full-name','username','password','level' );
    validate_fields($req_fields);
-      if(find_by_groupName($_POST['username']) === false ){
+      if(find_by_userName($_POST['username']) === false ){
           $session->msg('d','<b>Sorry!</b> Entered username already exists! Please, enter unique username.');
           redirect('add_user.php', false);
       }
    if(empty($errors)){
-           $name   = remove_junk($db->escape($_POST['full-name']));
+          $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
        $password   = remove_junk($db->escape($_POST['password']));
        $user_level = (int)$db->escape($_POST['level']);
@@ -61,6 +61,10 @@
                 <label for="username">Username</label>
                 <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
+              <div class="form-group">
+                  <label for="username">Email</label>
+                  <input type="text" class="form-control" name="email" placeholder="">
+              </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name ="password"  placeholder="Password">

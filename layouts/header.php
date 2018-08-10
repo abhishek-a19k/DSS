@@ -11,12 +11,16 @@
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-    <link rel="stylesheet" href="libs/css/main.css" />
+
+        <link rel="stylesheet" href="libs/css/main.css" />
   </head>
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-      <div class="logo pull-left"> Deerwalk Sifal-Inventory </div>
+
+      <div class="logo pull-left">
+         Deerwalk Siphal School
+      </div>
       <div class="header-content">
       <div class="header-date pull-left">
         <strong><?php echo date("F j, Y");?></strong>
@@ -29,6 +33,8 @@
               <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
               <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
             </a>
+
+
             <ul class="dropdown-menu">
               <!--<li>
                   <a href="profile.php?id=<?php echo (int)$user['id'];?>">
@@ -54,6 +60,7 @@
       </div>
      </div>
     </header>
+
     <div class="sidebar">
       <?php if($user['user_level'] === '1'): ?>
         <!-- admin menu -->
@@ -74,3 +81,4 @@
 
 <div class="page">
   <div class="container-fluid">
+

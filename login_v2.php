@@ -19,6 +19,12 @@
             <label for="Password" class="control-label">Password</label>
             <input type="password" name= "password" class="form-control" placeholder="password">
         </div>
+
+
+          <div class="">
+              <a  href="forgotPassword.php" class="btn btn-info pull-left">Forgot password</a>
+
+          </div>
         <div class="form-group">
                 <button type="submit" class="btn btn-info  pull-right">Login</button>
         </div>

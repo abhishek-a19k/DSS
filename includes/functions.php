@@ -19,6 +19,18 @@ function remove_junk($str){
   return $str;
 }
 /*--------------------------------------------------------------*/
+/* Function to get quantity and compare in instock
+/*--------------------------------------------------------------*/
+
+
+function get_count($str){
+    $str = nl2br($str);
+    $str = htmlspecialchars(strip_tags($str, ENT_QUOTES));
+    return $str;
+}
+
+
+/*--------------------------------------------------------------*/
 /* Function for Uppercase first character
 /*--------------------------------------------------------------*/
 function first_character($str){

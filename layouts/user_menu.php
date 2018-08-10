@@ -1,4 +1,6 @@
--<ul>
+
+
+<ul>
   <li>
     <a href="user_function.php">
       <i class="glyphicon glyphicon-home"></i>
@@ -12,5 +14,13 @@
       </a>
 
   </li>
+
+   <li>
+
+       <a href="notify.php" >
+            <i class="glyphicon glyphicon-bell"></i>
+            <span>Notify</span>
+        </a>
+    </li>
 
 </ul>
