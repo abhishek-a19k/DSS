@@ -38,7 +38,7 @@
                 <th class="text-center" style="width: 15%;"> Quantity</th>
                  <!-- <th class="text-center" style="width: 15%;">User</th>-->
                 <th class="text-center" style="width: 15%;"> Date </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+               <!-- <th class="text-center" style="width: 100px;"> Actions </th>-->
              </tr>
             </thead>
            <tbody>
@@ -48,11 +48,11 @@
                <td><?php echo remove_junk($sale['name']); ?></td>
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
                <td class="text-center"><?php echo $sale['date']; ?></td>
-               <td class="text-center">
-                  <div class="btn-group">
-                     <a href="edit_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
+               <!--<td class="text-center">-->
+                 <!-- <div class="btn-group">
+                     <a href="edit_sale.php?id=<?php /*echo (int)$sale['id'];*/?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
-                     </a>
+                     </a>-->
                     <!-- <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
                      </a>-->

@@ -79,7 +79,7 @@ $results = '';
   <?php if($results): ?>
     <div class="page-break">
        <div class="sale-head pull-right">
-           <h1>Sales Report</h1>
+           <h1>Used Report</h1>
            <strong><?php if(isset($start_date)){ echo $start_date;}?> To <?php if(isset($end_date)){echo $end_date;}?> </strong>
        </div>
       <table class="table table-border">
@@ -99,19 +99,19 @@ $results = '';
                 <h6><?php echo remove_junk(ucfirst($result['name']));?></h6>
               </td>
 
-             <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
+            <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
 -->
           </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot>
-         <tr class="text-right">
+      <!--   <tr class="text-right">
            <td colspan="4"></td>
            <td colspan="1">Grand Total</td>
            <td> $
-           <?php echo number_format(total_price($results)[0], 2);?>
+           <?php /*echo number_format(total_price($results)[0], 2);*/?>
           </td>
-         </tr>
+         </tr>-->
 
       </table>
     </div>

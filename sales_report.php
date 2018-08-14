@@ -3,6 +3,8 @@ $page_title = 'Sale Report';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(3);
+
+    $all_users = find_all('users');
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -25,7 +27,28 @@ $page_title = 'Sale Report';
                   <span class="input-group-addon"><i class="glyphicon glyphicon-menu-right"></i></span>
                   <input type="text" class="datepicker form-control" name="end-date" placeholder="To">
                 </div>
+
+
+
+            <br>
+            <div class="input-group">
+                <select class="form-control" name="product-categorie">
+                    <option value="">Select user</option>
+                    <?php  foreach ($all_users as $user): ?>
+                        <option value="<?php echo (int)$user['id'] ?>">
+                                    <?php echo $user['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+
+
+                </label>
+                <div class="input-group"></div>
             </div>
+
+
+
             <div class="form-group">
                  <button type="submit" name="submit" class="btn btn-primary">Generate Report</button>
             </div>
