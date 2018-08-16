@@ -130,4 +130,99 @@ function randString($length = 5)
 }
 
 
+
+?>
+
+
+
+
+<?php
+
+require_once("libs/phpmailer/class.phpmailer.php");
+require_once("libs/phpmailer/class.smtp.php");
+require ("libs/phpmailer/PHPMailerAutoload.php");
+
+function sendForgetPasswordMail($email){
+
+
+    $mailer = new PHPMailer();
+    $mailer->IsSMTP();
+    $mailer->SMTPSecure = 'tls';
+    $mailer->Host = 'smtp.gmail.com';
+    $mailer->SMPTDebug = 2;
+    $mailer->Port = 587;
+    $mailer->Username = 'abhishek.kadariya@deerwalk.edu.np';
+    $mailer->Password = 'thedoctor';
+    $mailer->SMTPAuth = true;
+    $mailer->From = 'abhishek.kadariya@deerwalk.edu.np';
+    $mailer->FromName = "DSS Inventory Admin";
+    $mailer->Subject = 'Your password has been changed';
+    $mailer->isHTML(true);
+    $mailer->Body =
+        '<p> Your You new password is <b> sifalschool123 </b. </p>'.
+        '<p>Best Regards,<br> DSS Inventory Admin</p>';
+    $mailer->AddReplyTo( 'abhishek.kadariya@deerwalk.edu.np', 'DSS Inventory Admin' );
+    $mailer->AddAddress($email);
+
+    $mailer->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        )
+    );
+
+    if($mailer->Send()){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+
+    /*--------------------------------------------------------------*/
+    /* Function for sending email notification for user about their usage
+    /*--------------------------------------------------------------*/
+
+
+
+function sendMail($email, $s_used_by , $product_name, $s_qty, $date ){
+
+
+    $mailer = new PHPMailer();
+    $mailer->IsSMTP();
+    $mailer->SMTPSecure = 'tls';
+    $mailer->Host = 'smtp.gmail.com';
+    $mailer->SMPTDebug = 2;
+    $mailer->Port = 587;
+    $mailer->Username = 'abhishek.kadariya@deerwalk.edu.np';
+    $mailer->Password = 'thedoctor';
+    $mailer->SMTPAuth = true;
+    $mailer->From = 'abhishek.kadariya@deerwalk.edu.np';
+    $mailer->FromName = "DSS Inventory Admin";
+    $mailer->Subject = 'Used Item';
+    $mailer->isHTML(true);
+    $mailer->Body =
+        '<p> Hello ' . $s_used_by .',</br>'.
+        'You have used '. $s_qty . ' ' . $product_name . ' as on '. $date . '. <br></p>'.
+        '<p>Best Regards,<br> DSS Inventory Admin</p>';
+    $mailer->AddReplyTo( 'abhishek.kadariya@deerwalk.edu.np', 'DSS Inventory Admin' );
+    $mailer->AddAddress($email);
+
+    $mailer->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        )
+    );
+
+    if($mailer->Send()){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+
 ?>
