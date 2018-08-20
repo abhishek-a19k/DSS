@@ -160,6 +160,18 @@ function tableExists($table){
     return ($result && $db->affected_rows() === 1 ? true : false);
 	}
 
+/*--------------------------------------------------------------*/
+/* Function to update the forgot password
+/*--------------------------------------------------------------*/
+
+function updatePassword($email, $password) {
+     global $db;
+    $sql = "UPDATE users SET password='{$password}' WHERE email ='{$email}' ";
+    $result = $db->query($sql);
+    return ($result && $db->affected_rows() === 1 ? true : false);
+
+}
+
   /*--------------------------------------------------------------*/
   /* Find all Group name
   /*--------------------------------------------------------------*/
@@ -180,6 +192,19 @@ function find_by_userName($val)
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
 }
+
+/*--------------------------------------------------------------*/
+/* Find UserName
+/*--------------------------------------------------------------*/
+function find_email_by_username($username)
+{
+    global $db;
+    $sql = "SELECT email FROM users WHERE username = '{$db->escape($username)}' LIMIT 1 ";
+    $result = $db->query($sql);
+    return ($result->fetch_array(MYSQLI_ASSOC));
+}
+
+
   /*--------------------------------------------------------------*/
   /* Find group level
   /*--------------------------------------------------------------*/
@@ -220,7 +245,7 @@ function find_by_userName($val)
    /*--------------------------------------------------------------*/
 function join_product_table(){
     global $db;
-    $sql  =" SELECT p.id,p.name, p.quantity ,p.date, c.name";
+    $sql  =" SELECT p.id,p.name,p.code, p.quantity, p.buy_price,p.date, c.name";
     $sql  .=" AS categorie";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
@@ -289,7 +314,6 @@ function find_all_product_info_by_id($id){
    $sql   = " SELECT p.id,p.name,c.name AS categorie ";
    $sql  .= "FROM products p";
    $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-   //$sql  .= " LEFT JOIN media m ON m.id = p.media_id";
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
    return find_by_sql($sql);
  }
@@ -363,6 +387,16 @@ function find_by_productName($val)
 {
     global $db;
     $sql = "SELECT name FROM products WHERE name = '{$db->escape($val)}' LIMIT 1 ";
+    $result = $db->query($sql);
+    return($db->num_rows($result) === 0 ? true : false);
+}
+/*--------------------------------------------------------------*/
+/* Find by  product code
+/*--------------------------------------------------------------*/
+function find_by_productCode($val)
+{
+    global $db;
+    $sql = "SELECT code FROM products WHERE name = '{$db->escape($val)}' LIMIT 1 ";
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
 }

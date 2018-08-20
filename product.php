@@ -24,10 +24,10 @@ $products = join_product_table();
                             <th class="text-center" style="width: 50px;">#</th>
 
                             <th> Product Title </th>
+                            <th class="text-center" style="width: 10%;"> Product code </th>
                             <th class="text-center" style="width: 10%;"> Categorie </th>
                             <th class="text-center" style="width: 10%;"> Instock </th>
-
-
+                            <th class="text-center" style="width: 10%;"> Buying Price </th>
                             <th class="text-center" style="width: 10%;"> Product Added </th>
                             <th class="text-center" style="width: 100px;"> Actions </th>
                         </tr>
@@ -38,8 +38,10 @@ $products = join_product_table();
                                 <td class="text-center"><?php echo count_id();?></td>
 
                                 <td> <?php echo remove_junk($product['name']); ?></td>
+                                <td class="text-center"> <?php echo remove_junk($product['code']); ?></td>
                                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
+                                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
 
                                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                                 <td class="text-center">
@@ -63,65 +65,4 @@ $products = join_product_table();
 <?php include_once('layouts/footer.php'); ?>
 
 
-<!--
-<?php
-$queryNotification = "SELECT * from sales where qty <= :qua1 ";
-$stmtNotification  = $conn->prepare($queryNotification);
-$stmtNotification->bindParam(':qua1',$qua1);
-$stmtNotification->execute();
 
-$listofnotification = '';
-$total = 0 ;
-while ($queryNotRow = $stmtNotification->fetch()){
-
-$stockname     = $queryNotRow['name'];
-$stockquantity = $queryNotRow['quantity'];
-$Category      = $queryNotRow['category'];
-$total =  $total + $stockquantity;
-}
-
-if($total <=5)
-{
-$mail = new PHPMailer;
-
-// Set mailer to use SMTP
-$mail->isSMTP();
-
-// Specify main SMTP servers
-$mail->Host = 'smtp.gmail.com';
-// Enable SMTP authentication
-$mail->SMTPAuth = true;
-
-// SMTP username
-$mail->Username = '=';
-// SMTP password
-$mail->Password = '';
-
-// Enable TLS encryption (gmail setting)
-$mail->SMTPSecure = 'tls';
-// TCP port to connect to (gmail setting)
-$mail->Port = 587;
-$mail->From = 'a';
-$mail->FromName = 'a';
-// Add recipients
-$mail->addAddress($adminemail, $adminfullname);
-
-
-$mail->isHTML(true);   // Set email format to HTML
-
-$mail->Subject =  'Notification Of Stock Low';
-$mail->Body    = 'Dear '.$adminfullname.', <br><br> Your Stock Are Low ,<br>Please Reorder Again,<br><br> Below are the Stock Low Details<br><br>'.$listofnotification.'<br><br>Thank you.';
-
-if(!$mail->send()) {
-echo 'Message could not be sent.';
-echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-echo 'Maile Sent';
-}
-}
-else
-{
-echo 'Quantity More than 5';
-}
-?>
--->

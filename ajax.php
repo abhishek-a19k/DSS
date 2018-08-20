@@ -4,7 +4,7 @@
 ?>
 
 <?php
- // Auto suggetion
+ // Auto suggestion
     $html = '';
    if(isset($_POST['product_name']) && strlen($_POST['product_name']))
    {
@@ -47,7 +47,7 @@
                     <option disabled>Select User</option>";
             foreach ($all_users as $user) {
 
-                $html .= "<option value=\" " . $user['username'] . " \" >" . $user['username'] . "</option>" ;
+                $html .= "<option value=\"" . $user['username'] . "\" >" . $user['username'] . "</option>" ;
 
             }
 

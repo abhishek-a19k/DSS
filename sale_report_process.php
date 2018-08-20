@@ -100,7 +100,7 @@ $results = '';
               </td>
 
             <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
--->
+
           </tr>
         <?php endforeach; ?>
         </tbody>

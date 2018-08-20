@@ -1,5 +1,5 @@
 
-function suggetion() {
+function suggestion() {
 
      $('#sug_input').keyup(function(e) {
 
@@ -47,6 +47,7 @@ function suggetion() {
       var formData = {
           'p_name' : $('input[name=title]').val()
       };
+      console.log("Here");
         // process the form
         $.ajax({
             type        : 'POST',

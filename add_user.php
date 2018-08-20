@@ -17,13 +17,14 @@
    if(empty($errors)){
           $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
+       $email   = remove_junk($db->escape($_POST['email']));
        $password   = remove_junk($db->escape($_POST['password']));
        $user_level = (int)$db->escape($_POST['level']);
        $password = sha1($password);
         $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level";
+        $query .="name,username,email,password,user_level";
         $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}'";
+        $query .=" '{$name}', '{$username}','{$email}','{$password}', '{$user_level}'";
         $query .=")";
         if($db->query($query)){
           //sucess
@@ -40,6 +41,7 @@
    }
  }
 ?>
+
 <?php include_once('layouts/header.php'); ?>
   <?php echo display_msg($msg); ?>
   <div class="row">
@@ -63,7 +65,7 @@
             </div>
               <div class="form-group">
                   <label for="username">Email</label>
-                  <input type="text" class="form-control" name="email" placeholder="">
+                  <input type="email" class="form-control" name="email" placeholder="Enter your email">
               </div>
             <div class="form-group">
                 <label for="password">Password</label>

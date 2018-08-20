@@ -142,7 +142,7 @@ require_once("libs/phpmailer/class.phpmailer.php");
 require_once("libs/phpmailer/class.smtp.php");
 require ("libs/phpmailer/PHPMailerAutoload.php");
 
-function sendForgetPasswordMail($email){
+function sendForgetPasswordMail($email, $password){
 
 
     $mailer = new PHPMailer();
@@ -159,7 +159,7 @@ function sendForgetPasswordMail($email){
     $mailer->Subject = 'Your password has been changed';
     $mailer->isHTML(true);
     $mailer->Body =
-        '<p> Your You new password is <b> sifalschool123 </b. </p>'.
+        '<p> Your You new password is <b>'. $password .' </b. </p>'.
         '<p>Best Regards,<br> DSS Inventory Admin</p>';
     $mailer->AddReplyTo( 'abhishek.kadariya@deerwalk.edu.np', 'DSS Inventory Admin' );
     $mailer->AddAddress($email);

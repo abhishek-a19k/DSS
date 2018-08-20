@@ -30,8 +30,8 @@
         <ul class="info-menu list-inline list-unstyled">
           <li class="profile">
             <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-              <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-              <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
+              <!--<img src="uploads/users/<?php /*echo $user['image'];*/?>" alt="user-image" class="img-circle img-inline">
+-->              <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
             </a>
 
 
