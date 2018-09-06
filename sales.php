@@ -38,6 +38,7 @@ $sales = find_all_sale();
                  <th class="text-center" style="width: 15%;"> Quantity</th>
 
                  <th class="text-center" style="width: 15%;"> Date </th>
+                 <th class="text-center" style="width: 15%;"> Actions </th>
 
              </tr>
             </thead>
@@ -52,11 +53,19 @@ $sales = find_all_sale();
 
                  <td class="text-center"><?php echo remove_junk($sale['used_by']);?></td>
 
-
-
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
 
                <td class="text-center"><?php echo $sale['date']; ?></td>
+                 <td class="text-center">
+                     <div class="btn-group">
+                         <a href="edit_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
+                             <span class="glyphicon glyphicon-edit"></span>
+                         </a>
+                         <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                             <span class="glyphicon glyphicon-trash"></span>
+                         </a>
+                     </div>
+                 </td>
 
              </tr>
              <?php endforeach;?>

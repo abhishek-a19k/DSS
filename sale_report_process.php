@@ -1,19 +1,24 @@
 <?php
 $page_title = 'Sales Report';
 $results = '';
-  require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-   page_require_level(3);
+require_once('includes/load.php');
+// Checkin What level user has permission to view this page
+page_require_level(3);
+$all_users = find_all('users');
+$all_products=find_all('products');
 ?>
 <?php
+//  if(isset($_POST['submit']) && isset($_POST['user']) && isset($_POST['product'])){
   if(isset($_POST['submit'])){
-    $req_dates = array('start-date','end-date');
+   $req_dates = array('start-date','end-date');
+
     validate_fields($req_dates);
 
     if(empty($errors)):
       $start_date   = remove_junk($db->escape($_POST['start-date']));
       $end_date     = remove_junk($db->escape($_POST['end-date']));
       $results      = find_sale_by_dates($start_date,$end_date);
+   //   $results      = find_sale_by_dates_person($start_date,$end_date,$user);
     else:
       $session->msg("d", $errors);
       redirect('sales_report.php', false);
@@ -23,6 +28,8 @@ $results = '';
     $session->msg("d", "Select dates");
     redirect('sales_report.php', false);
   }
+
+
 ?>
 <!doctype html>
 <html lang="en-US">
@@ -87,8 +94,10 @@ $results = '';
           <tr>
               <th>Date</th>
               <th>Product Title</th>
+              <th>Used by</th>
+              <th>Buying Price</th>
               <th>Total Qty</th>
-             <!-- <th>TOTAL</th>-->
+              <th>TOTAL</th>
           </tr>
         </thead>
         <tbody>
@@ -98,29 +107,39 @@ $results = '';
               <td class="desc">
                 <h6><?php echo remove_junk(ucfirst($result['name']));?></h6>
               </td>
+               <td class="text-center"><?php echo remove_junk($result['used_by']);?></td>
+              <td class="text-right"><?php echo remove_junk($result['price']);?></td>
+               <td class="text-right"><?php echo remove_junk($result['total_used']);?>
+               <td class="text-right"><?php echo remove_junk($result['total']);?>
 
-            <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
-
-          </tr>
+    </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot>
-      <!--   <tr class="text-right">
+      <tr class="text-right">
            <td colspan="4"></td>
            <td colspan="1">Grand Total</td>
-           <td> $
-           <?php /*echo number_format(total_price($results)[0], 2);*/?>
+           <td> Rs.
+           <?php echo number_format(total_price($results)[0], 2);?>
           </td>
-         </tr>-->
+         </tr>
 
       </table>
     </div>
+<!---->
+<!--  --><?php
+//    else:
+//        $session->msg("d", "Sorry no items has been used ");
+//        redirect('sales_report.php', false);
+//     endif;
+//  ?>
+<!--</body>-->
+</html>
+
   <?php
     else:
-        $session->msg("d", "Sorry no sales has been found. ");
+        $session->msg("d", "Sorry no items has been used ");
         redirect('sales_report.php', false);
      endif;
   ?>
-</body>
-</html>
 <?php if(isset($db)) { $db->db_disconnect(); } ?>

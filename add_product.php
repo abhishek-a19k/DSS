@@ -12,17 +12,21 @@
  if(isset($_POST['add_product'])){
    $req_fields = array('product-title','product-categorie','code','product-quantity');
    validate_fields($req_fields);
+//     $cat_name = remove_junk($db->escape($_POST['categorie-name']));
 
    //authentication
 
-     if(find_by_productName($_POST['product-title']) === false){
+
+     if(find_by_productCode($_POST['code']) == false){
+         $session->msg('d','<b>Sorry!</b> Entered Product Code already exists!');
+         redirect('add_product.php', false);
+     }
+    if(find_by_productName($_POST['product-title']) === false){
          $session->msg('d','<b>Sorry!</b> Entered Product already exists!');
          redirect('add_product.php', false);
      }
-     if(find_by_productCode($_POST['code']) === false){
-         $session->msg('d','<b>Sorry!</b> Entered Product already exists!');
-         redirect('add_product.php', false);
-     }
+
+
 
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
@@ -99,21 +103,13 @@
                     </select>
                   </div>
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="code" placeholder="Product code">
-                                </div>
-                            </div>
-                        </div>
 
 <!--                  <div class="form-group">-->
 <!--                      <div class="row">-->
 <!--                          <div class="col-md-4">-->
 <!--                              <div class="input-group">-->
 <!---->
-<!--                              <select class="form-control" name="product-code">-->
+<!--                              <select class="form-control" name="code">-->
 <!--                                  <option value="">Select Product Code</option>-->
 <!--                                  --><?php // foreach ($all_codes as $code): ?>
 <!--                                      <option value="--><?php //echo (int)$code['id'] ?><!--">-->
@@ -123,14 +119,23 @@
 <!--                          </div>-->
 <!---->
 <!--                      </div>-->
+<!--                      </div>-->
+<!--                  </div>-->
+
+
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="input-group">
+                                  <input type="text" class="form-control" name="code" placeholder="Product code">
+                              </div>
+                          </div>
                       </div>
                   </div>
-
-
+                </div>
               </div>
 
-
-              <div class="form-group">
+                      <div class="form-group">
                <div class="row">
                  <div class="col-md-4">
                    <div class="input-group">
@@ -146,8 +151,8 @@
                      <!--  <i class="glyphicon glyphicon-usd"></i>-->
                          <i class="fa fa-inr"></i>
                      </span>
-                           <input type="number" class="form-control" name="buying-price" placeholder="Buying Price">
-                           <span class="input-group-addon">.00</span>
+                           <input type="number" class="form-control" name="buying_price" placeholder="Buying Price">
+<!--                           <span class="input-group-addon">.00</span>-->
                        </div>
                    </div>
                </div>

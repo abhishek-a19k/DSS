@@ -88,11 +88,11 @@ function total_price($totals){
    $sum = 0;
    $sub = 0;
    foreach($totals as $total ){
-     $sum += $total['total_saleing_price'];
-     $sub += $total['total_buying_price'];
-     $profit = $sum - $sub;
+       $sum += $total['total'];
+    // $sub += $total['total_buying_price'];
+
    }
-   return array($sum,$profit);
+   return array($sum);
 }
 /*--------------------------------------------------------------*/
 /* Function for Readable date time
@@ -152,7 +152,7 @@ function sendForgetPasswordMail($email, $password){
     $mailer->SMPTDebug = 2;
     $mailer->Port = 587;
     $mailer->Username = 'abhishek.kadariya@deerwalk.edu.np';
-    $mailer->Password = 'thedoctor';
+    $mailer->Password = '';
     $mailer->SMTPAuth = true;
     $mailer->From = 'abhishek.kadariya@deerwalk.edu.np';
     $mailer->FromName = "DSS Inventory Admin";
@@ -203,8 +203,9 @@ function sendMail($email, $s_used_by , $product_name, $s_qty, $date ){
     $mailer->Subject = 'Used Item';
     $mailer->isHTML(true);
     $mailer->Body =
-        '<p> Hello ' . $s_used_by .',</br>'.
-        'You have used '. $s_qty . ' ' . $product_name . ' as on '. $date . '. <br></p>'.
+
+        '<br> Hello ' . $s_used_by .',</br>'.'</br'.'</br>'.
+        '<p>You have used '. $s_qty . ' ' . $product_name . ' as on '. $date . '. <br></p>'.
         '<p>Best Regards,<br> DSS Inventory Admin</p>';
     $mailer->AddReplyTo( 'abhishek.kadariya@deerwalk.edu.np', 'DSS Inventory Admin' );
     $mailer->AddAddress($email);

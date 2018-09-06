@@ -147,6 +147,15 @@ function tableExists($table){
       $result = find_by_sql($sql);
       return $result;
   }
+
+  function find_used_by($user){
+      global $db;
+      $results=array();
+      $sql= "SELECT";
+      $sql= "* FROM sales";
+      $result= find_by_sql($sql);
+      return  $result;
+  }
   /*--------------------------------------------------------------*/
   /* Function to update the last log in of a user
   /*--------------------------------------------------------------*/
@@ -192,7 +201,13 @@ function find_by_userName($val)
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
 }
-
+function find_by_used_by($used_by)
+{
+    global $db;
+    $sql = "SELECT *FROM sales WHERE used_by = {$used_by}";
+    $result = $db->query($sql);
+    return($db->num_rows($result) === 0 ? true : false);
+}
 /*--------------------------------------------------------------*/
 /* Find UserName
 /*--------------------------------------------------------------*/
@@ -367,6 +382,7 @@ function  dailySales($year,$month){
   $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}'";
   $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.product_id";
   return find_by_sql($sql);
+
 }
 
 
@@ -396,20 +412,22 @@ function find_by_productName($val)
 function find_by_productCode($val)
 {
     global $db;
-    $sql = "SELECT code FROM products WHERE name = '{$db->escape($val)}' LIMIT 1 ";
+    $sql = "SELECT * FROM products WHERE code = '{$db->escape($val)}' LIMIT 1 ";
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
 }
+//
+//function find_personal_history($username){
+//    global $db;
+//    $sql  = "SELECT s.id,s.username,s.qty,s.date,p.name";
+//    $sql .= " FROM sales s ";
+//    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+//    $sql .= " WHERE s.username = '".$db->escape((string)$username) . "'";
+//    $sql .= " ORDER BY s.date DESC ";
+//    return find_by_sql($sql);
+//}
 
-function find_personal_history($username){
-    global $db;
-    $sql  = "SELECT s.id,s.username,s.qty,s.date,p.name";
-    $sql .= " FROM sales s ";
-    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-    $sql .= " WHERE s.username = '".$db->escape((string)$username) . "'";
-    $sql .= " ORDER BY s.date DESC ";
-    return find_by_sql($sql);
-}
+
 
 
 
@@ -420,11 +438,31 @@ function find_sale_by_dates($start_date,$end_date){
     global $db;
     $start_date  = date("Y-m-d", strtotime($start_date));
     $end_date    = date("Y-m-d", strtotime($end_date));
-    $sql  = "SELECT s.date, p.name,";
-   $sql .= "COUNT(s.product_id) AS total_records ,";
-    $sql .= "SUM(s.qty) AS total_sales ";
-   // $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price,";
-   // $sql .= "SUM(p.buy_price * s.qty) AS total_buying_price ";
+    $sql  = "SELECT s.date, p.name,s.used_by,";
+    $sql .= "COUNT(s.product_id) AS total_records ,";
+    $sql .= "p.buy_price AS price, ";
+    $sql .= "SUM(s.qty) AS total_used ,";
+    $sql .= "SUM(p.buy_price * s.qty) AS total ";
+    $sql .= "FROM sales s ";
+    $sql .= "LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE s.date BETWEEN '{$start_date}' AND '{$end_date}'";
+    $sql .= " GROUP BY DATE(s.date),p.name";
+    $sql .= " ORDER BY DATE(s.date) DESC";
+    return $db->query($sql);
+}
+/*--------------------------------------------------------------*/
+/* Function for Generate sales report by two dates
+/*--------------------------------------------------------------*/
+function find_sale_by_dates_person($start_date,$end_date,$user){
+    global $db;
+    $start_date  = date("Y-m-d", strtotime($start_date));
+    $end_date    = date("Y-m-d", strtotime($end_date));
+
+    $sql  = "SELECT s.id, s.used_by,s.qty,s.date, p.name,";
+    $sql .= "COUNT(s.product_id) AS total_records ,";
+    $sql .= "p.buy_price AS price, ";
+    $sql .= "SUM(s.qty) AS total_used ,";
+    $sql .= "SUM(p.buy_price * s.qty) AS total ";
     $sql .= "FROM sales s ";
     $sql .= "LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " WHERE s.date BETWEEN '{$start_date}' AND '{$end_date}'";
@@ -433,6 +471,67 @@ function find_sale_by_dates($start_date,$end_date){
     return $db->query($sql);
 }
 
+function  find_personal_history($username){
+    global $db;
+    //$username = find_used_by($username);
+    $sql  = "SELECT s.id,s.qty,s.date, s.used_by,p.name,";
+    $sql .= "p.buy_price AS price,";
+    $sql .= "SUM(s.qty) AS total_used,";
+    $sql .= "SUM(p.buy_price * s.qty) AS total ";
+    $sql .= " FROM sales s ";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE s.used_by ='{$username}' ";
+    $sql .= " GROUP BY DATE(s.date),p.name";
+    $sql .= " ORDER BY s.date DESC ";
+
+    return find_by_sql($sql);
+}
+
+function find_product_history1($name){
+    global $db;
+    //$used_by = find_used_by($used_by);
+    $sql  = "SELECT s.qty,s.date,";
+    $sql .= "p.buy_price AS price,";
+    $sql .= "SUM(s.qty) AS total_used,";
+    $sql .= "SUM(p.buy_price * s.qty) AS total ";
+    $sql .= " FROM sales s ";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE s.used_by ='{$name}' ";
+    $sql .= " GROUP BY DATE(s.date),p.name";
+    $sql .= " ORDER BY s.date DESC ";
+
+    return find_by_sql($sql);
+}
+
+
+function find_product_history($name){
+    global $db;
+    $sql  = "SELECT s.id,s.qty,s.date,";
+    $sql .= "p.buy_price AS price,";
+    $sql .= "SUM(s.qty) AS total_used,";
+    $sql .= "SUM(p.buy_price * s.qty) AS total ";
+    $sql .= " FROM sales s ";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE p.name = '".$db->escape((string)$name) . "'";
+    $sql .= " GROUP BY DATE(s.date),p.name";
+    $sql .= " ORDER BY s.date DESC ";
+
+    return find_by_sql($sql);
+}
+
+//
+//function find_personal_history($used_by){
+//    global $db;
+//    $sql  = "SELECT s.id,s.used_by,s.qty,s.date,p.name,";
+//    $sql .= "p.buy_price AS price,";
+//    $sql .= "SUM(s.qty) AS total_used,";
+//    $sql .= "SUM(p.buy_price * s.qty) AS total ";
+//    $sql .= " FROM sales s ";
+//    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+//    $sql .= " WHERE s.username = '".$db->escape((string)$used_by) . "'";
+//    $sql .= " ORDER BY s.date DESC ";
+//    return find_by_sql($sql);
+//}
 /*--------------------------------------------------------------*/
 /* Function for Generate Monthly sales report
 /*--------------------------------------------------------------*/

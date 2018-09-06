@@ -1,10 +1,11 @@
 <?php
 $page_title = 'Sale Report';
-  require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-   page_require_level(3);
+require_once('includes/load.php');
+// Checkin What level user has permission to view this page
+page_require_level(3);
 
-    $all_users = find_all('users');
+$all_users = find_all('users');
+$all_products=find_all('products');
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -31,21 +32,31 @@ $page_title = 'Sale Report';
 
 
             <br>
-            <div class="input-group">
-                <select class="form-control" name="product-categorie">
-                    <option value="">Select user</option>
-                    <?php  foreach ($all_users as $user): ?>
-                        <option value="<?php echo (int)$user['id'] ?>">
-                                    <?php echo $user['name'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-
-
-                </label>
-                <div class="input-group"></div>
-            </div>
+<!--            <div class="input-group">-->
+<!--                <select class="form-control" name="user-categorie">-->
+<!--                    <option value="">Select user</option>-->
+<!--                    --><?php // foreach ($all_users as $user): ?>
+<!--                        <option value="--><?php //echo (int)$user['id'] ?><!--">-->
+<!--                                    --><?php //echo $user['name'] ?><!--</option>-->
+<!--                            --><?php //endforeach; ?>
+<!--                        </select>-->
+<!--                    </div>-->
+<!---->
+<!---->
+<!---->
+<!--            </div>-->
+<!---->
+<!--                <div class="input-group">-->
+<!--                    <select class="form-control" name="product-categorie">-->
+<!--                        <option value="">Select Product</option>-->
+<!--                        --><?php // foreach ($all_products as $product): ?>
+<!--                            <option value="--><?php //echo (int)$product['id'] ?><!--">-->
+<!--                                --><?php //echo $product['name'] ?><!--</option>-->
+<!--                        --><?php //endforeach; ?>
+<!--                    </select>-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
 
