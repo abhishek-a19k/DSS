@@ -19,7 +19,7 @@
     <header id="header">
 
       <div class="logo pull-left">
-         Deerwalk Siphal School
+         Deerwalk Sifal School
       </div>
       <div class="header-content">
       <div class="header-date pull-left">

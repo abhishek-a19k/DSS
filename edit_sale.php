@@ -59,7 +59,7 @@ if(!$sale){
         <span>All History</span>
      </strong>
      <div class="pull-right">
-       <a href="sales.php" class="btn btn-primary">Show all History</a>
+       <a href="history.php" class="btn btn-primary">Show all History</a>
      </div>
     </div>
     <div class="panel-body">

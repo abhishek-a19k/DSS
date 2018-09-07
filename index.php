@@ -6,12 +6,12 @@
 
 
 <?php include_once('layouts/header.php'); ?>
-<div class="login-page" style="background-color:powderblue;">
+<div class="login-page" style="background-color:powderblue">
     <div class="text-center">
     <!--   //<h1>Welcome</h1>-->
-        <img src="libs/images/logo.png" alt="Deerwalk Siphal School" width="190" height="100">
+        <img src="libs/images/logo.png" alt="Deerwalk Siphal School" width="250" height="90">
 
-       <p>Sign in to Siffal Inventory</p>
+       <p>Sign in to Sifal Inventory</p>
      </div>
      <?php echo display_msg($msg); ?>
       <form method="post" action="auth.php" class="clearfix">
@@ -28,11 +28,10 @@
               <a  href="forgotPassword.php" class="btn btn-info pull-left">Forgot password</a>
 
           </div>
-
-
         <div class="form-group">
                 <button type="submit" class="btn btn-info  pull-right">Login</button>
         </div>
-    </form>
+      </form>
+
 </div>
 <?php include_once('layouts/footer.php'); ?>

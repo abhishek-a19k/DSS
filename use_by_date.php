@@ -20,7 +20,7 @@ $all_products=find_all('products');
 
       </div>
       <div class="panel-body">
-          <form class="clearfix" method="post" action="sale_report_process.php">
+          <form class="clearfix" method="post" action="use_by_date_report_process.php">
             <div class="form-group">
               <label class="form-label">Date Range</label>
                 <div class="input-group">

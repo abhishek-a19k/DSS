@@ -35,7 +35,7 @@
   </li>
 
     <li>
-        <a href=" sales.php" class="submenu-toggle">
+        <a href=" history.php" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
             <span>History</span>
         </a>
@@ -48,11 +48,11 @@
             <span>Use Report</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="sales_report.php">Use by dates </a></li>
+            <li><a href="use_by_date.php">Use by dates </a></li>
             <li><a href="personal_report.php">Personal Report </a></li>
             <li><a href="product_report.php">Product Report </a></li>
-            <li><a href="monthly_sales.php">Monthly uses</a></li>
-            <li><a href="daily_sales.php">Daily uses</a> </li>
+            <li><a href="monthly_uses.php">Monthly uses</a></li>
+            <li><a href="daily_uses.php">Daily uses</a> </li>
         </ul>
     </li>
 

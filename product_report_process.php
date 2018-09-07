@@ -91,7 +91,7 @@ if(isset($_POST['product_report'])){
         <div class="sale-head pull-right">
             <h1>Product Used Report:</h1>
 
-            <strong> <?php if(isset($productName)){echo $productName;} ?>  </strong>
+            <strong> <?php if(isset($name)){echo $name;} ?>  </strong>
         </div>
         <table class="table table-border">
             <thead>

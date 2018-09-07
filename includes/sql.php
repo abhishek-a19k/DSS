@@ -371,7 +371,7 @@ function find_recent_sale_added($limit){
 /*--------------------------------------------------------------*/
 
 /*--------------------------------------------------------------*/
-/* Function for Generate Daily sales report
+/* Function for Generate Daily uses report
 /*--------------------------------------------------------------*/
 function  dailySales($year,$month){
   global $db;
